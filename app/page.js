@@ -41,8 +41,10 @@ export default function Home() {
       <div className='my-4 px-4'>
         <h1 className='text-3xl'>Blogs</h1>
         {
-          data.map(d => (
+          data.map((d, i) => (
+            <div key={i}>
             <PostCard />
+            </div>
           ))
         }
       </div>
