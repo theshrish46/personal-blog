@@ -1,22 +1,32 @@
 {
   "name": "personal-blog",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon backend/server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theshrish46/personal-blog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theshrish46/personal-blog/issues"
+  },
+  "homepage": "https://github.com/theshrish46/personal-blog#readme",
   "dependencies": {
-    "autoprefixer": "10.4.14",
-    "eslint": "8.45.0",
-    "eslint-config-next": "13.4.10",
-    "next": "13.4.10",
-    "postcss": "8.4.26",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-icons": "^4.10.1",
-    "tailwindcss": "3.3.3"
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.1",
+    "mongoose": "^7.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
