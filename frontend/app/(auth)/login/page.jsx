@@ -1,19 +1,22 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 const page = () => {
-  const [email, setEmail] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
   async function login(e) {
     e.preventDefault();
     const resposne = await fetch('http://localhost:8000/loginpage', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ userName, password }),
     });
     const data = await resposne.json();
     console.log(data);
+    router.push('/');
   }
 
   return (
@@ -22,10 +25,10 @@ const page = () => {
         <form className='flex flex-col' onSubmit={login}>
           <input
             type='text'
-            placeholder='Email'
+            placeholder='User Name'
             className='border-gray-300 border-2 px-2 py-3 my-5 rounded-lg placeholder:text-gray-600'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
           />
           <input
             type='text'

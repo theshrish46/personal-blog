@@ -5,7 +5,7 @@ import { BsGithub, BsLinkedin, BsTwitter } from 'react-icons/bs';
 const Footer = () => {
   return (
     <>
-      <div className='w-full flex justify-center items-center text-2xl sticky bottom-0 left-0 my-6'>
+      <div className='w-full h-auto flex justify-center items-center text-2xl sticky top-0 left-0 my-6'>
         <Link
           href={'/'}
           className='mx-4 hover:text-blue-500 transition-all duration-150 ease-linear'
