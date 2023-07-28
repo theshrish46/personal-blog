@@ -2,40 +2,44 @@
 
 import Link from 'next/link';
 import React, { useContext, useState, useEffect } from 'react';
-import { BsPersonFill, BsSunFill } from 'react-icons/bs';
+import { BsPersonFill, BsPersonFillLock, BsPlusCircle, BsSunFill } from 'react-icons/bs';
 import { UserContext } from './UserContext';
+import { compareSync } from 'bcryptjs';
 
 const Header = () => {
   const { userInfo, setUserInfo } = useContext(UserContext);
-  useEffect(async () => {
-    const res = await fetch('http:/localhost:8000/profile')
-    const userInfo = await res.json()
-    console.log(userInfo)
-    setUserInfo(userInfo)
+
+  useEffect(() => {
+    fetch('http://localhost:8000/profile', { credentials: 'include' })
+      .then(res => res.json()).then(item => setUserInfo(item))
   }, [])
 
-  function logout() {
+  async function logout() {
     fetch('http://localhost:8000/logout', {
       method: 'POST'
     })
     setUserInfo(null)
   }
 
-  const username = userInfo?.username
+  const username = userInfo?.userName
 
   return (
     <>
-      <div className='px-4 my-4 w-8/12 mx-auto flex justify-between items-center text-xl font-semibold'>
+      <div className='px-4 my-4 w-11/12 mx-auto flex justify-between items-center text-xl font-semibold'>
         <Link href={'/'}>Bloggey</Link>
 
-        <div className='flex justify-center items-center'>
+        <div className='flex justify-around items-center'>
           {
             username && (
-              <>
-                <Link href={'/create'}>Create a new Post</Link>
-                <div className='text-2xl'>{username}</div>
-                <a onClick={logout}>Logout</a>
-              </>
+              <div className='flex justify-center items-center'>
+                <Link href={'/create'} className='text-xs mx-2'>
+                  <BsPlusCircle className='text-xl' />
+                </Link>
+                <div className='text-base mx-2 cursor-pointer'>{username}</div>
+                <a onClick={logout} className='mx-2 text-sm cursor-pointer'>
+                  <BsPersonFillLock className='text-xl cursor-pointer' />
+                </a>
+              </div>
 
             )
           }
@@ -57,7 +61,7 @@ const Header = () => {
             <BsPersonFill />
           </Link> */}
 
-          <BsSunFill className='ml-4' />
+          <BsSunFill className='ml-4 cursor-pointer' />
         </div>
       </div>
     </>

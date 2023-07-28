@@ -16,11 +16,19 @@ const salt = bcrypt.genSaltSync(10);
 const secret = 'asdfghjklqwertyuiopzxcvbnm';
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(cookieParser());
 app.unlink('//uploads', express.static(__dirname + '/uploads'));
 
 mongoose.connect(process.env.MONGO_URL).then((res) => console.log('Connected'));
+
+app.get('/profile', (req, res) => {
+  const { token } = req.cookies;
+  jwt.verify(token, secret, {}, (err, info) => {
+    if (err) throw err;
+    res.json(info);
+  });
+});
 
 app.post('/user-register', async (req, res) => {
   const { userName, userEmail, password } = req.body;
@@ -53,14 +61,6 @@ app.post('/loginpage', async (req, res) => {
   } else {
     res.json('wrong credentials');
   }
-});
-
-app.get('/profile', (req, res) => {
-  const { token } = req.cookies;
-  jwt.verify(token, secret, {}, (err, info) => {
-    if (err) throw err;
-    res.json(info);
-  });
 });
 
 app.post('/logout', (req, res) => {
