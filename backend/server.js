@@ -8,6 +8,8 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('./models/UserModel');
+const multer = require('multer');
+const uploadMiddleware = multer({ dest: './backend/uploads' });
 
 dotenv.config();
 const PORT = process.env.PORT || 8000;
@@ -15,7 +17,7 @@ const PORT = process.env.PORT || 8000;
 const salt = bcrypt.genSaltSync(10);
 const secret = 'asdfghjklqwertyuiopzxcvbnm';
 
-app.use(express.json());
+app.use(express.json({ limit: '200mb' }));
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(cookieParser());
 app.unlink('//uploads', express.static(__dirname + '/uploads'));
@@ -65,6 +67,11 @@ app.post('/loginpage', async (req, res) => {
 
 app.post('/logout', (req, res) => {
   res.cookie('token', '').json('logged out');
+});
+
+app.post('/createpost', uploadMiddleware.single('file'), (req, res) => {
+  const { title, content, file, summary } = req.body;
+  res.json({ title, summary, file: req.file, content });
 });
 
 app.listen(PORT);

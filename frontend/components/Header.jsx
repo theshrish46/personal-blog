@@ -4,7 +4,6 @@ import Link from 'next/link';
 import React, { useContext, useState, useEffect } from 'react';
 import { BsPersonFill, BsPersonFillLock, BsPlusCircle, BsSunFill } from 'react-icons/bs';
 import { UserContext } from './UserContext';
-import { compareSync } from 'bcryptjs';
 
 const Header = () => {
   const { userInfo, setUserInfo } = useContext(UserContext);
@@ -14,7 +13,7 @@ const Header = () => {
       .then(res => res.json()).then(item => setUserInfo(item))
   }, [])
 
-  async function logout() {
+  function logout() {
     fetch('http://localhost:8000/logout', {
       method: 'POST'
     })
@@ -32,7 +31,7 @@ const Header = () => {
           {
             username && (
               <div className='flex justify-center items-center'>
-                <Link href={'/create'} className='text-xs mx-2'>
+                <Link href={'/create'} className='text-xs mx-2' target='_blank'>
                   <BsPlusCircle className='text-xl' />
                 </Link>
                 <div className='text-base mx-2 cursor-pointer'>{username}</div>
