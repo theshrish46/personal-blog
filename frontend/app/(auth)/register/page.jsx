@@ -1,51 +1,55 @@
-'use client';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+"use client";
+import axios from "axios";
+import React, { useState } from "react";
 
 const page = () => {
-  const [userName, setUserName] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const router = useRouter();
-
-  async function register(e) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleClick = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:8000/user-register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userName, userEmail, password }),
-      credentials: 'include',
+    const { data } = await axios.post("http://localhost:8000/auth/register", {
+      name,
+      email,
+      password,
     });
-    router.push('/');
-  }
+    console.log(data);
+  };
+
   return (
     <>
-      <div className='w-4/12 mx-auto h-80 my-10'>
-        <form className='flex flex-col' onSubmit={register}>
+      <div className="p-10 shadow-xl rounded-xl">
+        <form
+          className="flex flex-col justify-center items-start gap-3 h-auto"
+          onSubmit={handleClick}
+        >
+          <label htmlFor="name">Name</label>
           <input
-            type='text'
-            placeholder='Name'
-            className='px-2 py-3 my-4 border-gray-300 border-2 rounded-lg placeholder:text-gray-600'
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            type="text"
+            is="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
+
+          <label htmlFor="email">Email</label>
           <input
-            type='email'
-            placeholder='Email'
-            className='px-2 py-3 my-4 border-gray-300 border-2 rounded-lg placeholder:text-gray-600'
-            value={userEmail}
-            onChange={(e) => setUserEmail(e.target.value)}
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
+
+          <label htmlFor="password">Password</label>
           <input
-            type='password'
-            placeholder='Password'
-            className='px-2 py-3 my-4 border-gray-300 border-2 rounded-lg placeholder:text-gray-600'
+            type="password"
+            id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+
           <input
-            type='submit'
-            className='px-2 py-3 my-4 rounded-lg bg-gray-600 outline-none'
+            type="submit"
+            className="mt-2 hover:bg-black hover:text-white outline-none transition-all duration-300"
           />
         </form>
       </div>
