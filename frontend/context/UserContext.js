@@ -1,4 +1,7 @@
-import { useContext, useState } from "react";
+"use client";
+import { createContext, useContext, useState } from "react";
+
+const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -11,5 +14,10 @@ export function UserProvider({ children }) {
 }
 
 export function useUser() {
-  return useContext(UserContext);
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("useUser must be used within a user provider");
+  }
+
+  return context;
 }
