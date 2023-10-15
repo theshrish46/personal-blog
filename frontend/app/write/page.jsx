@@ -21,11 +21,16 @@ const AddBlog = () => {
   };
 
   return (
-    <div className="container">
-      <h2>Add a New Blog Post</h2>
+    <div className="container w-11/12 mx-auto my-10">
+      <h2 className="text-6xl text-gray-300 font-extrabold my-4">
+        Add a New Blog Post
+      </h2>
       <form onSubmit={handleBlogSubmit}>
         <div className="mb-4">
-          <label htmlFor="title" className="block font-bold text-lg mb-2">
+          <label
+            htmlFor="title"
+            className="block font-bold text-lg text-gray-400 mb-2"
+          >
             Title
           </label>
           <input
@@ -36,11 +41,14 @@ const AddBlog = () => {
             onChange={handleTitleChange}
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="content" className="block font-bold text-lg mb-2">
+        <div className="mb-4 text-base">
+          <label
+            htmlFor="content"
+            className="block font-bold text-lg mb-2 text-gray-400"
+          >
             Content
           </label>
-          <ReactQuill value={content} onChange={handleContentChange} />
+          <ReactQuill value={content} onChange={handleContentChange} className="text-base"/>
         </div>
         <button
           type="submit"

@@ -1,8 +1,11 @@
 "use client";
 import axios from "axios";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const page = () => {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,6 +17,8 @@ const page = () => {
       password,
     });
     console.log(data);
+    localStorage.getItem("token") ? null : localStorage.setItem("token", data);
+    router.push("/");
   };
 
   return (
@@ -52,6 +57,7 @@ const page = () => {
             className="mt-2 hover:bg-black hover:text-white outline-none transition-all duration-300"
           />
         </form>
+        <Link href={"/login"} className="text-sm text-blue-500 hover:underline mt-6" >Have an Account</Link>
       </div>
     </>
   );

@@ -6,7 +6,6 @@ require("dotenv").config();
 
 const router = require("./routes/UserRoute");
 
-
 try {
   mongoose.connect(process.env.MONGO_URL, {});
   console.log("CONNECTED TO DATABASE SUCCESSFULLY");
