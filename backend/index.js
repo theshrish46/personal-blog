@@ -3,8 +3,23 @@ const app = express();
 const { default: mongoose } = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
+const multer = require("multer");
 
-const router = require("./routes/UserRoute");
+const UserRoute = require("./routes/UserRoute");
+const BlogRoute = require("./routes/BlogRoute");
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "/tmp/uploads");
+  },
+  filename: (req, file, cb) => {
+    // const fileSuffix = Date.now();
+    // cb(null, file.fieldname + "-" + fileSuffix);
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 try {
   mongoose.connect(process.env.MONGO_URL, {});
@@ -16,7 +31,8 @@ try {
 app.use(express.json());
 app.use(cors());
 
-app.use("/auth", router);
+app.use("/auth", UserRoute);
+app.use("/blog", upload.single("image"), BlogRoute);
 
 app.listen(process.env.PORT, () => {
   console.log(`PORT RUNNING SUCCESSFULLY AT ${process.env.PORT}`);
