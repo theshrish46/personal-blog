@@ -7,12 +7,7 @@ cloudinary.config({
 });
 
 const write = async (req, res) => {
-  const { title, content, image } = req.body;
-  console.log(image)
-  console.log(req.files)
-  console.log(req.body);
-  console.log(title);
-  console.log(content);
+  const { title, content} = req.body;
   res.status(201).json({ title, content });
 };
 

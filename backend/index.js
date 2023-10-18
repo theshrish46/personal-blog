@@ -10,12 +10,14 @@ const BlogRoute = require("./routes/BlogRoute");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "/tmp/uploads");
+    cb(null, "C:/Users/shrish kerur/Desktop/personal-blog/backend/uploads");
   },
   filename: (req, file, cb) => {
     // const fileSuffix = Date.now();
     // cb(null, file.fieldname + "-" + fileSuffix);
-    cb(null, file.originalname);
+    const imageType = file.originalname.split(".");
+    console.log(imageType);
+    cb(null, `${Date.now()}.${imageType[1]}`);
   },
 });
 

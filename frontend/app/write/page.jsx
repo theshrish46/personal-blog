@@ -17,7 +17,6 @@ const AddBlog = () => {
     console.log(e.target.files);
     try {
       setImage(e.target.files[0]);
-      console.log(e.target.files.path);
     } catch (error) {
       console.log("Image Error", error);
     }
@@ -30,11 +29,14 @@ const AddBlog = () => {
   const handleBlogSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/blog/write", {
-        title,
-        content,
-        image
-      });
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", content);
+      formData.append("image", image);
+      const response = await axios.post(
+        "http://localhost:8000/blog/write",
+        formData
+      );
       console.log(response);
     } catch (error) {
       console.log("POST ERROR =====", error);
